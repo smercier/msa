@@ -28,14 +28,16 @@ This git will build a fresh new Ubuntu 12.04 (precise 64bit) virtual server with
 
 ## On Windows
 
-  * Download this repo and unzip it
-  * In your unzip directory, download this file http://files.vagrantup.com/precise64.box
+ * Download this repo and unzip it
+ * In your unzip directory, download this file http://files.vagrantup.com/precise64.box
+
 
 	vagrant box add scribeui precise64.box 
 	vagrant up 
 	vagrant ssh
 
-  * Connec with your favorit client (MobaXtrem or putty)
+
+ * Connec with your favorit client (MobaXtrem or putty)
 
 
 
