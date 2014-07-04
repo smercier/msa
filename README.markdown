@@ -18,27 +18,38 @@ This git will build a fresh new Ubuntu 12.04 (precise 64bit) virtual server with
  * postgresql-9.1, PostGIS (with a osm database)
  * Apache2, WSGI mod
  * Mapserver 6.2, Mapcache, tinyows
- * imposm, osm2pgsql, osmosis
-    
-## On Mac / Ubuntu
+ * imposm 2, osm2pgsql, osmosis
+
+
+## Important directory
+
+ScribeUI will be install in `/opt/scribeui` directory.  Your map projet will be in `/opt/scribeui/workspace/[your_workspace]]`
+
+## How to use
+
+
+
+## Install box on Mac / Ubuntu
 
 	sh ./init_vagrant.sh
 
 Visite http://localhost:8080 or `vagrant ssh` to connect to your server.
 	
 
-## On Windows
+## Install box on Windows
 
- * Download this repo and unzip it
- * In your unzip directory, download this file http://files.vagrantup.com/precise64.box
+After install of VirtualBox and Vagrant download this repo and unzip it.  In your unzip directory, download this file http://files.vagrantup.com/precise64.box then do this
 
 
 	vagrant box add scribeui precise64.box 
 	vagrant up 
-	vagrant ssh
 
+You should be able to visite http://localhost:8080.   Also, you now be able to connect to your server with your favorit ssh client (MobaXtrem or putty).  On Windows, vagrant saved a key file to simplify this:
 
- * Connec with your favorit client (MobaXtrem or putty)
+	Host: 127.0.0.1
+	Port: 2222
+	Username: vagrant
+	Private key: C:/Documents and Settings/mapgears/.vagrant.d/insecure_private_key
 
 
 
