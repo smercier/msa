@@ -23,8 +23,9 @@ This git will build a fresh new Ubuntu 12.04 (precise 64bit) virtual server with
 ## On Mac / Ubuntu
 
 	sh ./init_vagrant.sh
-	vagrant ssh
-	http://localhost:8080
+
+Visite http://localhost:8080 or `vagrant ssh` to connect to your server.
+	
 
 ## On Windows
 
