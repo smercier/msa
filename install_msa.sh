@@ -1,6 +1,8 @@
 #!/bin/bash
 echo ===== need to execut as root ... =====
+echo =========================
 echo ===== Install utf-8 =====
+echo =========================
 export LANGUAGE=en_CA.UTF-8
 export LANG=en_CA.UTF-8
 export LC_ALL=en_CA.UTF-8
@@ -8,26 +10,36 @@ localedef -i en_CA -f UTF-8 en_CA
 locale-gen en_CA.UTF-8
 update-locale
 dpkg-reconfigure locales
+
+echo ==============================
 echo ===== Vagrant Postinstal =====
+echo ==============================
 # sh postinstall.sh
 apt-get update
+
+echo ====================================
 echo ===== Mapserver Suite OSM tool =====
+echo ====================================
 apt-get install -y python2.7 python-software-properties
-add-apt-repository -y ppa:ubuntugis/ppa
-apt-get update
+add-apt-repository -y ppa:ubuntugis/ppa && apt-get update
 apt-get install -y postgresql-9.1 postgresql-server-dev-9.1 postgresql-contrib-9.1 postgresql-9.1-postgis-2.0
-apt-get install -y apache2 binutils checkinstall git vim screen make python-virtualenv python-pip python-all-dev osm2pgsql osmosis
+apt-get install -y apache2 binutils checkinstall git vim screen make python-virtualenv python-pip python-all-dev 
 apt-get install -y gdal-bin cgi-mapserver mapserver-bin libmapcache mapcache-cgi mapcache-tools libapache2-mod-mapcache tinyows
 mkdir /tmp/ms_tmp
 chown www-data:www-data /tmp/ms_tmp
 
-echo ===== OSM tool =====
+echo =================
+echo ===== tools =====
+echo =================
 wget -O - http://m.m.i24.cc/osmconvert.c | cc -x c - -lz -O3 -o osmconvert
 mv osmconvert /usr/bin
 apt-get install -y build-essential python-dev protobuf-compiler libprotobuf-dev libtokyocabinet-dev python-psycopg2 libgeos-c1
 pip install imposm
+apt-get install -y osm2pgsql osmosis
 
+echo ====================
 echo ===== WSGI mod =====
+echo ====================
 apt-get -y install python-dev apache2-prefork-dev
 wget https://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
 tar xzf mod_wsgi-3.4.tar.gz && cd mod_wsgi-3.4
@@ -41,7 +53,9 @@ EOF
 ln -s /etc/apache2/mods-available/wsgi.load /etc/apache2/mods-enabled/wsgi.load
 
 
+echo ========================
 echo ===== init PostGIS =====
+echo ========================
 sudo su postgres -c'createdb -E UTF8 --lc-ctype en_CA.UTF-8 -T template0 template_postgis'
 sudo su postgres -c'createlang -d template_postgis plpgsql;'
 sudo su postgres -c'psql -U postgres -d template_postgis -c"CREATE EXTENSION postgis;"'
@@ -56,9 +70,12 @@ sudo su postgres -c'psql -U postgres -d osm -c "CREATE USER osm WITH PASSWORD '"
 sudo su postgres -c'psql -U postgres -d osm -c "GRANT ALL PRIVILEGES ON DATABASE osm to osm;"'
 echo ===== Configuring postgresql =====
 sed -i -e "s/#listen_addresses\ \=\ 'localhost'/listen_addresses = '*'/g" /etc/postgresql/9.1/main/postgresql.conf
-echo "host    all             all             0.0.0.0/0            md5" | tee -a : > /dev/null
+echo "host    all             all             0.0.0.0/0            md5" | tee -a /etc/postgresql/9.1/main/pg_hba.conf > /dev/null
 service postgresql restart
+
+echo ============================
 echo ===== Install ScribeUI =====
+echo ============================
 
 cd /opt
 git clone https://github.com/smercier/scribeui.git && cd scribeui
